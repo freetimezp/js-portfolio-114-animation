@@ -12,8 +12,43 @@ gsap.registerPlugin(MotionPathPlugin);
 gsap.registerPlugin(useGSAP);
 
 const VinylPlayerAnimation = ({ textPrimary, textSecondary, coverImg }) => {
+    const container = useRef(null);
+
+    useEffect(() => {
+        document.getElementById("def-1")
+            .setAttribute("d", document.getElementById("path-1")
+                .getAttribute("d"));
+
+        document.getElementById("def-2")
+            .setAttribute("d", document.getElementById("path-2")
+                .getAttribute("d"));
+    }, []);
+
+    useGSAP(() => {
+        const animateText = (selector, delay) => {
+            gsap.to(selector, {
+                attr: { startOffset: "100%" },
+                ease: "linear",
+                duration: 6,
+                repeat: -1,
+                delay: delay,
+            });
+        };
+
+        animateText("#Text1", 0);
+        animateText("#Text2", 2);
+        animateText("#Text3", 4);
+
+        gsap.to(".disk", {
+            rotate: 360,
+            duration: 2,
+            repeat: -1,
+            ease: "linear",
+        });
+    }, { scope: container });
+
     return (
-        <div className="container">
+        <div className="container" ref={container}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 350 350"
